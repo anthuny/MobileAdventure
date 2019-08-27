@@ -5,42 +5,41 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //Variables
-    Vector2 playerPos;
+    private Vector3 playerPos;
+    private Rigidbody2D rb;
+
     public float playerSpeed = .2f;
+
 
     private void Start()
     {
-        playerPos = transform.position;
+        
+        rb = GetComponent<Rigidbody2D>();
         
     }
     void FixedUpdate()
     {
-        //Call function(s) every frame
-        PlayerMovement();
-
-        transform.position = playerPos;
+        playerPos = Vector3.zero;
+        playerPos.x = Input.GetAxisRaw("Horizontal");
+        playerPos.y = Input.GetAxisRaw("Vertical"); 
+        if (playerPos != Vector3.zero)
+        {
+            PlayerMovement();
+        }
     }
 
     void PlayerMovement()
     {
-        if (Input.GetKey(KeyCode.A))
+        rb.MovePosition(transform.position + playerPos * playerSpeed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Collider")
         {
-            playerPos.x -= playerSpeed;
+            transform.position = new Vector2(0, 5);
+            
         }
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            playerPos.x += playerSpeed;
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            playerPos.y += playerSpeed;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            playerPos.y -= playerSpeed;
-        }
     }
 }

@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Follow.cs" />
+    <Compile Include="Assets\Gamemode.cs" />
     <Compile Include="Assets\Player.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Anthony Mitchell/Documents/GitHub/MobileAdventure/MobileAdventure19/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
