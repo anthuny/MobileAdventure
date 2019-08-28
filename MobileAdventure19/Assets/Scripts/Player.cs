@@ -17,9 +17,6 @@ public class Player : MonoBehaviour
     }
     void FixedUpdate()
     {
-        //call functions
-        PlayerController();
-
         //Find gamemode script
         GameObject gamemode = GameObject.Find("Gamemode");
         Gamemode gamemodeScript = gamemode.GetComponent<Gamemode>();
@@ -35,34 +32,6 @@ public class Player : MonoBehaviour
             {
                 //The functionality behind the movement
                 rb.MovePosition(transform.position + playerPos * playerSpeed * Time.deltaTime);
-            }
-        }
-    }
-
-    void PlayerController()
-    {
-        //Find gamemode script
-        GameObject gamemode = GameObject.Find("Gamemode");
-        Gamemode gamemodeScript = gamemode.GetComponent<Gamemode>();
-
-        //If the game IS over
-        if (gamemodeScript.playerLost)
-        {
-            {
-                //If the player presses space 
-                if (Input.GetKeyDown("space"))
-                {
-                    gamemodeScript.playerLost = false;
-
-                    //Set blockades to false
-                    gamemodeScript.eastBlockade.SetActive(false);
-                    gamemodeScript.northBlockade.SetActive(false);
-                    gamemodeScript.westBlockade.SetActive(false);
-                    gamemodeScript.southBlockade.SetActive(false);
-
-                    //Call functions
-                    gamemodeScript.StartGame();
-                }
             }
         }
     }
