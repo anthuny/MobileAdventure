@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
 
     public float playerSpeed = .2f;
 
+    public Animator animator;
+
     private void Start()
     {
         //Find components
@@ -24,14 +26,68 @@ public class Player : MonoBehaviour
         //If the game is NOT over
         if (!gamemodeScript.playerLost)
         {
+            //When walking left, play left animation
+            if (!Input.GetKey("a"))
+            {
+                animator.SetBool("GoingLeft", false);
+            }
+
+            if (Input.GetKey("a"))
+            {
+                animator.SetBool("GoingLeft", true);
+            }
+
+            //When walking left, play right animation
+            if (!Input.GetKey("d"))
+            {
+                animator.SetBool("GoingRight", false);
+            }
+
+            if (Input.GetKey("d"))
+            {
+                animator.SetBool("GoingRight", true);
+            }
+
+            if (Input.GetKey("w"))
+            {
+                animator.SetBool("GoingUp", true);
+            }
+
+            if (!Input.GetKey("w"))
+            {
+                animator.SetBool("GoingUp", false);
+            }
+
+            if (Input.GetKey("s"))
+            {
+                animator.SetBool("GoingDown", true);
+            }
+
+            if (!Input.GetKey("s"))
+            {
+                animator.SetBool("GoingDown", false);
+            }
+
+
+
             //Player Movement
             playerPos = Vector3.zero;
             playerPos.x = Input.GetAxisRaw("Horizontal");
             playerPos.y = Input.GetAxisRaw("Vertical");
+
             if (playerPos != Vector3.zero)
             {
                 //The functionality behind the movement
                 rb.MovePosition(transform.position + playerPos * playerSpeed * Time.deltaTime);
+
+                //Trigger walking animation
+                animator.SetBool("Walking", true);
+            }
+
+            else
+            {
+                //Trigger idle animation
+                animator.SetBool("Walking", false);
             }
         }
     }
@@ -100,7 +156,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector2(0, 5);
 
             //calling coroutine
-            StartCoroutine("SetLose");
+            SetLose();
             return;
         }
 
@@ -111,7 +167,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector2(0, 5);
 
             //calling coroutine
-            StartCoroutine("SetLose");
+            SetLose();
             return;
 
         }
@@ -123,7 +179,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector2(0, 5);
 
             //calling coroutine
-            StartCoroutine("SetLose");
+            SetLose();
             return;
         }
 
@@ -134,7 +190,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector2(0, 5);
 
             //calling coroutine
-            StartCoroutine("SetLose");
+            SetLose();
             return;
         }
     }
@@ -149,13 +205,13 @@ public class Player : MonoBehaviour
         gamemodeScript.winCondition = true;
         gamemodeScript.SetRoundEnd();
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.5f);
 
         //Enemy thinks of new wrong answer
         gamemodeScript.Think();
     }
 
-    IEnumerator SetLose()
+    void SetLose()
     {
         //Find gamemode script
         GameObject gamemode = GameObject.Find("Gamemode");
@@ -164,10 +220,5 @@ public class Player : MonoBehaviour
         //Sets screen text
         gamemodeScript.winCondition = false;
         gamemodeScript.SetRoundEnd();
-
-        yield return new WaitForSeconds(0.25f);
-
-        //Enemy thinks of new wrong answer
-        gamemodeScript.Think();
     }
 }

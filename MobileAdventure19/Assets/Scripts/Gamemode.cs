@@ -29,6 +29,18 @@ public class Gamemode : MonoBehaviour
     public int turnCountSouth;
     public int turnCountMax;
 
+    public bool allFour;
+    public bool ranEN;
+    public bool ranEW;
+    public bool ranES;
+    public bool ranNW;
+    public bool ranNS;
+    public bool ranWS;
+    public bool ranE;
+    public bool ranN;
+    public bool ranW;
+    public bool ranS;
+
     //count of amount of times the player went to a specific path
     public int playerEastCount;
     public int playerNorthCount;
@@ -38,8 +50,10 @@ public class Gamemode : MonoBehaviour
     public Image timeBar;
     public Text scoreText;
     public Text mainText;
+    public Text deathText;
 
     public Text highScoreText;
+    public GameObject speechBubble;
 
     //3 turn cooldown for east path
     public GameObject firstLifeE;
@@ -72,17 +86,25 @@ public class Gamemode : MonoBehaviour
 
     void Start()
     {
+        //Set speech bubble to invisible
+        speechBubble.SetActive(false);
+
         //Set score to 0
         score = 0;
 
-        mainText.text = "Press space to restart";
+        mainText.text = "";
+        deathText.text = "Press Space to Start";
 
         highScoreText.text = "Highscore " + PlayerPrefs.GetInt("HighScore", 0).ToString();
-
     }
 
     private void Update()
     {
+        //if (Input.GetKeyDown("t"))
+        { 
+
+
+        }
         //If the player presses space 
         if (Input.GetKeyDown("space") && playerLost)
         {
@@ -119,12 +141,21 @@ public class Gamemode : MonoBehaviour
 
     private void StartGame()
     {
+        //Set death to false
+        playerLost = false;
+
+        //Reset player's powision to middle of area
+        transform.position = new Vector2(0, 5);
+
         //Setting values to default starting value
         timeRemaining = maxTime;
         timeBar.fillAmount = 1;
 
-        //Set death to false
-        playerLost = false;
+        //Set start text to nothing
+        deathText.text = "";
+
+        //Set speech bubble to visible
+        speechBubble.SetActive(true);
 
         //Call functions
         Think();
@@ -145,11 +176,374 @@ public class Gamemode : MonoBehaviour
 
     public void Think()
     {
-        //Set direction
-        wrongAns = Random.Range(1, 5);
+        //If no walls are up, proceed think process with all four options.
+        if (!playerLost && turnCountEast == 0 && turnCountNorth == 0 && turnCountWest == 0 && turnCountSouth == 0)
+        {
+            allFour = true;
+            ranEN = false;
+            ranEW = false;
+            ranES = false;
+            ranNW = false;
+            ranNS = false;
+            ranWS = false;
+            ranE = false;
+            ranN = false;
+            ranW = false;
+            ranS = false;
 
-        //Set text to display direction
-        if (!playerLost)
+            //Call Function
+            RandomController();
+            return;
+        }
+
+        //South and West walls up
+        if (!playerLost && turnCountSouth > 0 && turnCountWest > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = false;
+            ranEW = false;
+            ranES = false;
+            ranNW = false;
+            ranNS = false;
+            ranWS = true;
+            ranE = false;
+            ranN = false;
+            ranW = false;
+            ranS = false;
+
+            //Call Function
+            RandomController();
+            return;
+        }
+        
+        //North and South walls up
+        if (!playerLost && turnCountNorth > 0 && turnCountSouth > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = false;
+            ranEW = false;
+            ranES = false;
+            ranNW = false;
+            ranNS = true;
+            ranWS = false;
+            ranE = false;
+            ranN = false;
+            ranW = false;
+            ranS = false;
+
+            //Call Function
+            RandomController();
+            return;  
+        }
+
+        //North and West walls up
+        if (!playerLost && turnCountNorth > 0 && turnCountWest > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = false;
+            ranEW = false;
+            ranES = false;
+            ranNW = true;
+            ranNS = false;
+            ranWS = false;
+            ranE = false;
+            ranN = false;
+            ranW = false;
+            ranS = false;
+
+            //Call Function
+            RandomController();
+            return;
+        }
+
+        //East and west walls up
+        if (!playerLost && turnCountEast > 0 && turnCountWest > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = false;
+            ranEW = true;
+            ranES = false;
+            ranNW = false;
+            ranNS = false;
+            ranWS = false;
+            ranE = false;
+            ranN = false;
+            ranW = false;
+            ranS = false;
+
+            //Call Function
+            RandomController();
+            return;
+        }
+
+        //East and north walls up
+        if (!playerLost && turnCountEast > 0 && turnCountNorth > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = true;
+            ranEW = false;
+            ranES = false;
+            ranNW = false;
+            ranNS = false;
+            ranWS = false;
+            ranE = false;
+            ranN = false;
+            ranW = false;
+            ranS = false;
+
+            //Call Function
+            RandomController();
+            return;
+        }
+
+        //East and south walls up
+        if (!playerLost && turnCountEast > 0 && turnCountSouth > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = false;
+            ranEW = false;
+            ranES = true;
+            ranNW = false;
+            ranNS = false;
+            ranWS = false;
+            ranE = false;
+            ranN = false;
+            ranW = false;
+            ranS = false;
+
+            //Call Function
+            RandomController();
+            return;
+        }
+
+        //South wall is up
+        if (!playerLost && turnCountSouth > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = false;
+            ranEW = false;
+            ranES = false;
+            ranNW = false;
+            ranNS = false;
+            ranWS = false;
+            ranE = false;
+            ranN = false;
+            ranW = false;
+            ranS = true;
+
+            //Call Function
+            RandomController();
+            return;
+        }
+
+        //West wall is up
+        if (!playerLost && turnCountWest > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = false;
+            ranEW = false;
+            ranES = false;
+            ranNW = false;
+            ranNS = false;
+            ranWS = false;
+            ranE = false;
+            ranN = false;
+            ranW = true;
+            ranS = false;
+
+            //Call Function
+            RandomController();
+            return;
+        }
+
+        //North wall is up
+        if (!playerLost && turnCountNorth > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = false;
+            ranEW = false;
+            ranES = false;
+            ranNW = false;
+            ranNS = false;
+            ranWS = false;
+            ranE = false;
+            ranN = true;
+            ranW = false;
+            ranS = false;
+
+            //Call Function
+            RandomController();
+            return;
+        }
+
+        //East wall is up
+        if (!playerLost && turnCountEast > 0)
+        {
+            //Pick from those specific choices
+            allFour = false;
+            ranEN = false;
+            ranEW = false;
+            ranES = false;
+            ranNW = false;
+            ranNS = false;
+            ranWS = false;
+            ranE = true;
+            ranN = false;
+            ranW = false;
+            ranS = false;
+
+            //Call Function
+            RandomController();
+            return;
+        }
+    }
+
+    void RandomController()
+    {
+        if (allFour)
+        {
+            List<int> liarThink = new List<int>(new int[] { 1, 2, 3, 4 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+
+        if (ranWS)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 1, 2 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+
+        if (ranNS)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 1, 3 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+
+        if (ranNW)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 1, 4 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+
+        if (ranEW)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 2, 4 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+
+        if (ranEN)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 3, 4 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+
+        if (ranES)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 2, 3 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+
+        if (ranS)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 1, 2, 3 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+        
+            Choose();
+            return;
+        }
+
+        if (ranW)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 1, 2, 4 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+
+        if (ranN)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 1, 3, 4 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+
+        if (ranE)
+        {
+            //Generate thought process without a path with wall up
+            List<int> liarThink = new List<int>(new int[] { 2, 3, 4 });
+
+            //Pick from those specific choices
+            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+
+            Choose();
+            return;
+        }
+    }
+
+    void Choose()
+    {
+        if (allFour)
         {
             if (wrongAns == 1)
             {
@@ -170,6 +564,188 @@ public class Gamemode : MonoBehaviour
             {
                 mainText.text = "Go Down";
             }
+
+            allFour = false;
+            return;
+        }
+
+        if (ranWS)
+        {
+            if (wrongAns == 1)
+            {
+                mainText.text = "Go Left";
+            }
+
+            if (wrongAns == 2)
+            {
+                mainText.text = "Go Up";
+            }
+
+            ranWS = false;
+            return;
+        }
+
+        if (ranNS)
+        {
+            if (wrongAns == 1)
+            {
+                mainText.text = "Go Left";
+            }
+
+            if (wrongAns == 3)
+            {
+                mainText.text = "Go Right";
+            }
+
+            ranNS = false;
+            return;
+        }
+
+        if (ranNW)
+        {
+            if (wrongAns == 1)
+            {
+                mainText.text = "Go Left";
+            }
+
+            if (wrongAns == 4)
+            {
+                mainText.text = "Go Down";
+            }
+
+            ranNW = false;
+            return;
+        }
+
+        if (ranEW)
+        {
+            if (wrongAns == 2)
+            {
+                mainText.text = "Go Up";
+            }
+
+            if (wrongAns == 4)
+            {
+                mainText.text = "Go Down";
+            }
+
+            ranEW = false;
+            return;
+        }
+
+        if (ranEN)
+        {
+            if (wrongAns == 3)
+            {
+                mainText.text = "Go Right";
+            }
+
+            if (wrongAns == 4)
+            {
+                mainText.text = "Go Down";
+            }
+
+            ranEN = false;
+            return;
+        }
+
+        if (ranES)
+        {
+            if (wrongAns == 2)
+            {
+                mainText.text = "Go Up";
+            }
+
+            if (wrongAns == 3)
+            {
+                mainText.text = "Go Right";
+            }
+
+            ranES = false;
+            return;
+        }
+
+        if (ranS)
+        {
+            if (wrongAns == 1)
+            {
+                mainText.text = "Go Left";
+            }
+
+            if (wrongAns == 2)
+            {
+                mainText.text = "Go Up";
+            }
+
+            if (wrongAns == 3)
+            {
+                mainText.text = "Go Right";
+            }
+
+            return;
+        }
+
+        if (ranW)
+        {
+            if (wrongAns == 1)
+            {
+                mainText.text = "Go Left";
+            }
+
+            if (wrongAns == 2)
+            {
+                mainText.text = "Go Up";
+            }
+
+            if (wrongAns == 4)
+            {
+                mainText.text = "Go Down";
+            }
+
+            ranS = false;
+            return;
+        }
+
+        if (ranN)
+        {
+            if (wrongAns == 1)
+            {
+                mainText.text = "Go Left";
+            }
+
+            if (wrongAns == 3)
+            {
+                mainText.text = "Go Right";
+            }
+
+            if (wrongAns == 4)
+            {
+                mainText.text = "Go Down";
+            }
+
+            ranN = false;
+            return;
+        }
+
+        if (ranE)
+        {
+            if (wrongAns == 2)
+            {
+                mainText.text = "Go Up";
+            }
+
+            if (wrongAns == 3)
+            {
+                mainText.text = "Go Right";
+            }
+
+            if (wrongAns == 4)
+            {
+                mainText.text = "Go Down";
+            }
+
+            ranE = false;
+            return;
         }
     }
 
@@ -178,7 +754,7 @@ public class Gamemode : MonoBehaviour
         //If the player chooses incorrectly
         if (!winCondition)
         {
-            mainText.text = "Wrong!".ToString();
+            mainText.text = "Hahaha!".ToString();
 
             //Call function
             GameOver();
@@ -201,11 +777,14 @@ public class Gamemode : MonoBehaviour
         //Increase difficulty
         difficulty += .25f;
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
 
         //Turns to wait until specific blockade goes down if it's active
         if (turnCountEast == turnCountMax && eastBlockade.activeSelf)
         {
+            //Minus 1 block count due to one blockade despawning
+            blockCount--;
+
             eastBlockade.SetActive(false);
             turnCountEast = 0;
             blockEastCount = 0;
@@ -234,6 +813,9 @@ public class Gamemode : MonoBehaviour
 
         if (turnCountNorth == turnCountMax && northBlockade.activeSelf)
         {
+            //Minus 1 block count due to one blockade despawning
+            blockCount--;
+
             northBlockade.SetActive(false);
             turnCountNorth = 0;
             blockNorthCount = 0;
@@ -262,6 +844,9 @@ public class Gamemode : MonoBehaviour
 
         if (turnCountWest == turnCountMax && westBlockade.activeSelf)
         {
+            //Minus 1 block count due to one blockade despawning
+            blockCount--;
+
             westBlockade.SetActive(false);
             turnCountWest = 0;
             blockWestCount = 0;
@@ -289,6 +874,9 @@ public class Gamemode : MonoBehaviour
 
         if (turnCountSouth == turnCountMax && southBlockade.activeSelf)
         {
+            //Minus 1 block count due to one blockade despawning
+            blockCount--;
+
             southBlockade.SetActive(false);
             turnCountSouth = 0;
             blockSouthCount = 0;
@@ -331,7 +919,7 @@ public class Gamemode : MonoBehaviour
         scoreText.text = score.ToString();
 
         playerLost = true;
-        mainText.text = "Press space to restart";
+        deathText.text = "Press space to restart";
 
         //Set values of blockades to 0
         blockEastCount = 0;
@@ -348,20 +936,21 @@ public class Gamemode : MonoBehaviour
     //Checks to see if a path has hit max entries
     public void BuildEastBlock()
     {
-        //Increase Block count
+        //Increase Block East count
         blockEastCount++;
 
         //Call function
-        IncreaseTurnCount();
+        Invoke("IncreaseTurnCount", 0.05f);
 
         if (blockEastCount >= individualBlockMax) //If East is less then max)
         {
-            eastBlockade.SetActive(true);
-
-            //If block count goes over max, cap it at the max again
-            if (blockCount > altogetherBlockMax)
+            if (blockCount < altogetherBlockMax)
             {
-                blockCount = altogetherBlockMax;
+                //Increase block count
+                blockCount++;
+
+                //Spawn the block
+                eastBlockade.SetActive(true);
             }
         }
 
@@ -371,20 +960,21 @@ public class Gamemode : MonoBehaviour
 
     public void BuildNorthBlock()
     {
-        //Increase Block count
+        //Increase Block north count
         blockNorthCount++;
 
         //Call function
-        IncreaseTurnCount();
+        Invoke("IncreaseTurnCount", 0.05f);
 
         if (blockNorthCount >= individualBlockMax) //If East is less then max)
         {
-            northBlockade.SetActive(true);
-
-            //If block count goes over max, cap it at the max again
-            if (blockCount > altogetherBlockMax)
+            if (blockCount < altogetherBlockMax)
             {
-                blockCount = altogetherBlockMax;
+                //Increase block count
+                blockCount++;
+
+                //Spawn the block
+                northBlockade.SetActive(true);
             }
         }
 
@@ -394,20 +984,21 @@ public class Gamemode : MonoBehaviour
 
     public void BuildWestBlock()
     {
-        //Increase Block count
+        //Increase Block west count
         blockWestCount++;
 
         //Call function
-        IncreaseTurnCount();
+        Invoke("IncreaseTurnCount", 0.05f);
 
-        if (blockWestCount >= individualBlockMax)
+        if (blockWestCount >= individualBlockMax) //If East is less then max)
         {
-            westBlockade.SetActive(true);
-
-            //If block count goes over max, cap it at the max again
-            if (blockCount > altogetherBlockMax)
+            if (blockCount < altogetherBlockMax)
             {
-                blockCount = altogetherBlockMax;
+                //Increase block count
+                blockCount++;
+
+                //Spawn the block
+                westBlockade.SetActive(true);
             }
         }
 
@@ -417,19 +1008,21 @@ public class Gamemode : MonoBehaviour
 
     public void BuildSouthBlock()
     {
-        //Increase Block count
+        //Increase Block south count
         blockSouthCount++;
 
         //Call function
-        IncreaseTurnCount();
+        Invoke("IncreaseTurnCount", 0.05f);
 
-        if (blockSouthCount >= individualBlockMax)
+        if (blockSouthCount >= individualBlockMax) //If East is less then max)
         {
-            southBlockade.SetActive(true);
-            //If block count goes over max, cap it at the max again
-            if (blockCount > altogetherBlockMax)
+            if (blockCount < altogetherBlockMax)
             {
-                blockCount = altogetherBlockMax;
+                //Increase block count
+                blockCount++;
+
+                //Spawn the block
+                southBlockade.SetActive(true);
             }
         }
 
@@ -589,11 +1182,12 @@ public class Gamemode : MonoBehaviour
         ResetTurnCount();
     }
 
+    //If the turn count for a side is 0, turn all their images on
     void ResetTurnCount()
     {
-        //Enable images if turncount is 0 for east path
         if (turnCountEast == 0)
         {
+            fourthLifeE.SetActive(true);
             thirdLifeE.SetActive(true);
             secondLifeE.SetActive(true);
             firstLifeE.SetActive(true);
@@ -601,6 +1195,7 @@ public class Gamemode : MonoBehaviour
 
         if (turnCountNorth == 0)
         {
+            fourthLifeN.SetActive(true);
             thirdLifeN.SetActive(true);
             secondLifeN.SetActive(true);
             firstLifeN.SetActive(true);
@@ -608,13 +1203,15 @@ public class Gamemode : MonoBehaviour
 
         if (turnCountWest == 0)
         {
+            fourthLifeW.SetActive(true);
             thirdLifeW.SetActive(true);
             secondLifeW.SetActive(true);
             firstLifeW.SetActive(true);
         }
-
+  
         if (turnCountSouth == 0)
         {
+            fourthLifeS.SetActive(true);
             thirdLifeS.SetActive(true);
             secondLifeS.SetActive(true);
             firstLifeS.SetActive(true);
