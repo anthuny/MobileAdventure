@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Gamemode : MonoBehaviour
 {
     public int wrongAns;
+    public int previousAns = 1;
     public bool winCondition;
     public int score = 0;
     public int highScore;
@@ -55,34 +56,31 @@ public class Gamemode : MonoBehaviour
     public Text highScoreText;
     public GameObject speechBubble;
 
-    //3 turn cooldown for east path
-    public GameObject firstLifeE;
-    public GameObject secondLifeE;
-    public GameObject thirdLifeE;
-    public GameObject fourthLifeE;
-
-    //3 turn cooldown for north path
-    public GameObject firstLifeN;
-    public GameObject secondLifeN;
-    public GameObject thirdLifeN;
-    public GameObject fourthLifeN;
-
-    //3 turn cooldown for west path
-    public GameObject firstLifeW;
-    public GameObject secondLifeW;
-    public GameObject thirdLifeW;
-    public GameObject fourthLifeW;
-
-    //3 turn cooldown for south path
-    public GameObject firstLifeS;
-    public GameObject secondLifeS;
-    public GameObject thirdLifeS;
-    public GameObject fourthLifeS;
-
+    //Reference to hitboxes for pathways
     public GameObject eastBlockade;
     public GameObject northBlockade;
     public GameObject westBlockade;
     public GameObject southBlockade;
+
+    //3 turn cooldown for East path
+    public GameObject eastBlock1;
+    public GameObject eastBlock2;
+    public GameObject eastBlock3;
+
+    //3 turn cooldown for East path
+    public GameObject northBlock1;
+    public GameObject northBlock2;
+    public GameObject northBlock3;
+
+    //3 turn cooldown for West path
+    public GameObject westBlock1;
+    public GameObject westBlock2;
+    public GameObject westBlock3;
+
+    //3 turn cooldown for South path
+    public GameObject southBlock1;
+    public GameObject southBlock2;
+    public GameObject southBlock3;
 
     void Start()
     {
@@ -100,11 +98,7 @@ public class Gamemode : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown("t"))
-        { 
 
-
-        }
         //If the player presses space 
         if (Input.GetKeyDown("space") && playerLost)
         {
@@ -411,22 +405,36 @@ public class Gamemode : MonoBehaviour
     {
         if (allFour)
         {
-            List<int> liarThink = new List<int>(new int[] { 1, 2, 3, 4 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                List<int> liarThink = new List<int>(new int[] { 1, 2, 3, 4 });
 
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
+
+            //Call function
             Choose();
             return;
+
         }
 
         if (ranWS)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 1, 2 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 1, 2 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
 
             Choose();
             return;
@@ -434,11 +442,17 @@ public class Gamemode : MonoBehaviour
 
         if (ranNS)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 1, 3 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 1, 3 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
 
             Choose();
             return;
@@ -446,11 +460,17 @@ public class Gamemode : MonoBehaviour
 
         if (ranNW)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 1, 4 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 1, 4 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
 
             Choose();
             return;
@@ -458,11 +478,17 @@ public class Gamemode : MonoBehaviour
 
         if (ranEW)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 2, 4 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 2, 4 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
 
             Choose();
             return;
@@ -470,11 +496,17 @@ public class Gamemode : MonoBehaviour
 
         if (ranEN)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 3, 4 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 3, 4 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
 
             Choose();
             return;
@@ -482,11 +514,17 @@ public class Gamemode : MonoBehaviour
 
         if (ranES)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 2, 3 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 2, 3 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
 
             Choose();
             return;
@@ -494,11 +532,17 @@ public class Gamemode : MonoBehaviour
 
         if (ranS)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 1, 2, 3 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 1, 2, 3 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
         
             Choose();
             return;
@@ -506,11 +550,18 @@ public class Gamemode : MonoBehaviour
 
         if (ranW)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 1, 2, 4 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                previousAns = wrongAns;
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 1, 2, 4 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
 
             Choose();
             return;
@@ -518,11 +569,17 @@ public class Gamemode : MonoBehaviour
 
         if (ranN)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 1, 3, 4 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 1, 3, 4 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
 
             Choose();
             return;
@@ -530,11 +587,17 @@ public class Gamemode : MonoBehaviour
 
         if (ranE)
         {
-            //Generate thought process without a path with wall up
-            List<int> liarThink = new List<int>(new int[] { 2, 3, 4 });
+            //Set previous answer to equal wrong answer
+            previousAns = wrongAns;
 
-            //Pick from those specific choices
-            wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            while (wrongAns == previousAns)
+            {
+                //Generate thought process without a path with wall up
+                List<int> liarThink = new List<int>(new int[] { 2, 3, 4 });
+
+                //Pick from those specific choices
+                wrongAns = liarThink[Random.Range(0, liarThink.Count)];
+            }
 
             Choose();
             return;
@@ -940,7 +1003,7 @@ public class Gamemode : MonoBehaviour
         blockEastCount++;
 
         //Call function
-        Invoke("IncreaseTurnCount", 0.05f);
+        IncreaseTurnCount();
 
         if (blockEastCount >= individualBlockMax) //If East is less then max)
         {
@@ -964,7 +1027,7 @@ public class Gamemode : MonoBehaviour
         blockNorthCount++;
 
         //Call function
-        Invoke("IncreaseTurnCount", 0.05f);
+        IncreaseTurnCount();
 
         if (blockNorthCount >= individualBlockMax) //If East is less then max)
         {
@@ -988,7 +1051,7 @@ public class Gamemode : MonoBehaviour
         blockWestCount++;
 
         //Call function
-        Invoke("IncreaseTurnCount", 0.05f);
+        IncreaseTurnCount();
 
         if (blockWestCount >= individualBlockMax) //If East is less then max)
         {
@@ -1012,7 +1075,7 @@ public class Gamemode : MonoBehaviour
         blockSouthCount++;
 
         //Call function
-        Invoke("IncreaseTurnCount", 0.05f);
+        IncreaseTurnCount();
 
         if (blockSouthCount >= individualBlockMax) //If East is less then max)
         {
@@ -1056,165 +1119,127 @@ public class Gamemode : MonoBehaviour
             turnCountSouth++;
         }
 
-        //Enable images if turncount is 0 for west path
-        if (turnCountWest == 0)
-        {
-            fourthLifeW.SetActive(true);
-            thirdLifeW.SetActive(true);
-            secondLifeW.SetActive(true);
-            firstLifeW.SetActive(true);
-        }
-
-        //Enable images if turncount is 0 for east path
-        if (turnCountEast == 0)
-        {
-            fourthLifeE.SetActive(true);
-            thirdLifeE.SetActive(true);
-            secondLifeE.SetActive(true);
-            firstLifeE.SetActive(true);
-        }
-
-        //Enable images if turncount is 0 for south path
-        if (turnCountSouth == 0)
-        {
-            fourthLifeS.SetActive(true);
-            thirdLifeS.SetActive(true);
-            secondLifeS.SetActive(true);
-            firstLifeS.SetActive(true);
-        }
-
-        //Enable images if turncount is 0 for north path
-        if (turnCountNorth == 0)
-        {
-            fourthLifeN.SetActive(true);
-            thirdLifeN.SetActive(true);
-            secondLifeN.SetActive(true);
-            firstLifeN.SetActive(true);
-        }
-
-
         //Disable the images for turns left for East path
-        if (turnCountEast == 1)
+        if (blockEastCount == 1)
         {
-            fourthLifeE.SetActive(false);
+            eastBlock1.SetActive(true);
+            eastBlock2.SetActive(false);
+            eastBlock3.SetActive(false);
         }
 
-        if (turnCountEast == 2)
+        if (blockEastCount == 2)
         {
-            thirdLifeE.SetActive(false);
+            eastBlock2.SetActive(true);
+            eastBlock1.SetActive(false);
+            eastBlock3.SetActive(false);
         }
 
-        if (turnCountEast == 3)
+        if (blockEastCount == 3)
         {
-            secondLifeE.SetActive(false);
-        }
-
-        if (turnCountEast == 4)
-        {
-            firstLifeE.SetActive(false);
+            eastBlock3.SetActive(true);
+            eastBlock1.SetActive(false);
+            eastBlock2.SetActive(false);
         }
 
         //Disable the images for turns left for North path
-        if (turnCountNorth == 1)
+        if (blockNorthCount == 1)
         {
-            fourthLifeN.SetActive(false);
+            northBlock1.SetActive(true);
+            northBlock2.SetActive(false);
+            northBlock3.SetActive(false);
         }
 
-        if (turnCountNorth == 2)
+        if (blockNorthCount == 2)
         {
-            thirdLifeN.SetActive(false);
+            northBlock2.SetActive(true);
+            northBlock1.SetActive(false);
+            northBlock3.SetActive(false);
         }
 
-        if (turnCountNorth == 3)
+        if (blockNorthCount == 3)
         {
-            secondLifeN.SetActive(false);
-        }
-
-        if (turnCountNorth == 4)
-        {
-            firstLifeN.SetActive(false);
+            northBlock3.SetActive(true);
+            northBlock1.SetActive(false);
+            northBlock2.SetActive(false);
         }
 
         //Disable the images for turns left for West path
-        if (turnCountWest == 1)
+        if (blockWestCount == 1)
         {
-            fourthLifeW.SetActive(false);
+            westBlock1.SetActive(true);
+            westBlock2.SetActive(false);
+            westBlock3.SetActive(false);
         }
 
-        if (turnCountWest == 2)
+        if (blockWestCount == 2)
         {
-            thirdLifeW.SetActive(false);
+            westBlock2.SetActive(true);
+            westBlock1.SetActive(false);
+            westBlock3.SetActive(false);
         }
 
-        if (turnCountWest == 3)
+        if (blockWestCount == 3)
         {
-            secondLifeW.SetActive(false);
-        }
-
-        if (turnCountWest == 4)
-        {
-            firstLifeW.SetActive(false);
+            westBlock3.SetActive(true);
+            westBlock1.SetActive(false);
+            westBlock2.SetActive(false);
         }
 
         //Disable the images for turns left for South path
-        if (turnCountSouth == 1)
+        if (blockSouthCount == 1)
         {
-            fourthLifeS.SetActive(false);
+            southBlock1.SetActive(true);
+            southBlock2.SetActive(false);
+            southBlock3.SetActive(false);
         }
 
-        if (turnCountSouth == 2)
+        if (blockSouthCount == 2)
         {
-            thirdLifeS.SetActive(false);
+            southBlock2.SetActive(true);
+            southBlock1.SetActive(false);
+            southBlock3.SetActive(false);
         }
 
-        if (turnCountSouth == 3)
+        if (blockSouthCount == 3)
         {
-            secondLifeS.SetActive(false);
-        }
-
-        if (turnCountSouth == 4)
-        {
-            firstLifeS.SetActive(false);
-
+            southBlock3.SetActive(true);
+            southBlock1.SetActive(false);
+            southBlock2.SetActive(false);
         }
 
         //Call function
-        ResetTurnCount();
+        //ResetTurnCount();
     }
 
-    //If the turn count for a side is 0, turn all their images on
+    //If the turn count for a side is 0, turn all their images off
     void ResetTurnCount()
     {
-        if (turnCountEast == 0)
+        if (blockEastCount == 0)
         {
-            fourthLifeE.SetActive(true);
-            thirdLifeE.SetActive(true);
-            secondLifeE.SetActive(true);
-            firstLifeE.SetActive(true);
+            eastBlock1.SetActive(false);
+            eastBlock2.SetActive(false);
+            eastBlock3.SetActive(false);
         }
 
-        if (turnCountNorth == 0)
+        if (blockNorthCount == 0)
         {
-            fourthLifeN.SetActive(true);
-            thirdLifeN.SetActive(true);
-            secondLifeN.SetActive(true);
-            firstLifeN.SetActive(true);
+            northBlock1.SetActive(false);
+            northBlock2.SetActive(false);
+            northBlock3.SetActive(false);
         }
 
-        if (turnCountWest == 0)
+        if (blockWestCount == 0)
         {
-            fourthLifeW.SetActive(true);
-            thirdLifeW.SetActive(true);
-            secondLifeW.SetActive(true);
-            firstLifeW.SetActive(true);
+            westBlock1.SetActive(false);
+            westBlock2.SetActive(false);
+            westBlock3.SetActive(false);
         }
   
-        if (turnCountSouth == 0)
+        if (blockSouthCount == 0)
         {
-            fourthLifeS.SetActive(true);
-            thirdLifeS.SetActive(true);
-            secondLifeS.SetActive(true);
-            firstLifeS.SetActive(true);
+            southBlock1.SetActive(false);
+            southBlock2.SetActive(false);
+            southBlock3.SetActive(false);
         }
     }
 

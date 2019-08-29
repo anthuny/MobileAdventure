@@ -205,7 +205,7 @@ public class Player : MonoBehaviour
         gamemodeScript.winCondition = true;
         gamemodeScript.SetRoundEnd();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.05f);
 
         //Enemy thinks of new wrong answer
         gamemodeScript.Think();
