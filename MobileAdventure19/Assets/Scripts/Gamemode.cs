@@ -56,6 +56,18 @@ public class Gamemode : MonoBehaviour
     public Text highScoreText;
     public GameObject speechBubble;
 
+    //Reference to each path's timer images
+    public GameObject eastTimer;
+    public GameObject northTimer;
+    public GameObject westTimer;
+    public GameObject southTimer;
+
+    //Reference to each path's timer texts
+    public Text eastTimerText;
+    public Text northTimerText;
+    public Text westTimerText;
+    public Text southTimerText;
+
     //Reference to hitboxes for pathways
     public GameObject eastBlockade;
     public GameObject northBlockade;
@@ -84,6 +96,12 @@ public class Gamemode : MonoBehaviour
 
     void Start()
     {
+        //Call functions to set all path blockades to off
+        ResetEastPath();
+        ResetNorthPath();
+        ResetWestPath();
+        ResetSouthPath();
+
         //Set speech bubble to invisible
         speechBubble.SetActive(false);
 
@@ -417,7 +435,7 @@ public class Gamemode : MonoBehaviour
             }
 
             //Call function
-            Choose();
+            StartCoroutine("Choose");
             return;
 
         }
@@ -436,7 +454,7 @@ public class Gamemode : MonoBehaviour
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
 
-            Choose();
+            StartCoroutine("Choose");
             return;
         }
 
@@ -454,7 +472,7 @@ public class Gamemode : MonoBehaviour
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
 
-            Choose();
+            StartCoroutine("Choose");
             return;
         }
 
@@ -472,7 +490,7 @@ public class Gamemode : MonoBehaviour
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
 
-            Choose();
+            StartCoroutine("Choose");
             return;
         }
 
@@ -490,7 +508,7 @@ public class Gamemode : MonoBehaviour
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
 
-            Choose();
+            StartCoroutine("Choose");
             return;
         }
 
@@ -508,7 +526,7 @@ public class Gamemode : MonoBehaviour
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
 
-            Choose();
+            StartCoroutine("Choose");
             return;
         }
 
@@ -526,7 +544,7 @@ public class Gamemode : MonoBehaviour
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
 
-            Choose();
+            StartCoroutine("Choose");
             return;
         }
 
@@ -543,8 +561,8 @@ public class Gamemode : MonoBehaviour
                 //Pick from those specific choices
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
-        
-            Choose();
+
+            StartCoroutine("Choose");
             return;
         }
 
@@ -563,7 +581,7 @@ public class Gamemode : MonoBehaviour
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
 
-            Choose();
+            StartCoroutine("Choose");
             return;
         }
 
@@ -581,7 +599,7 @@ public class Gamemode : MonoBehaviour
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
 
-            Choose();
+            StartCoroutine("Choose");
             return;
         }
 
@@ -599,12 +617,12 @@ public class Gamemode : MonoBehaviour
                 wrongAns = liarThink[Random.Range(0, liarThink.Count)];
             }
 
-            Choose();
+            StartCoroutine("Choose");
             return;
         }
     }
 
-    void Choose()
+    IEnumerator Choose()
     {
         if (allFour)
         {
@@ -628,8 +646,9 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Down";
             }
 
+            yield return new WaitForSeconds(0.25f);
             allFour = false;
-            return;
+            yield return 0;
         }
 
         if (ranWS)
@@ -644,8 +663,9 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Up";
             }
 
+            yield return new WaitForSeconds(0.25f);
             ranWS = false;
-            return;
+            yield return 0;
         }
 
         if (ranNS)
@@ -660,8 +680,9 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Right";
             }
 
+            yield return new WaitForSeconds(0.25f);
             ranNS = false;
-            return;
+            yield return 0;
         }
 
         if (ranNW)
@@ -676,8 +697,10 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Down";
             }
 
+            yield return new WaitForSeconds(0.25f);
+
             ranNW = false;
-            return;
+            yield return 0;
         }
 
         if (ranEW)
@@ -692,8 +715,9 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Down";
             }
 
+            yield return new WaitForSeconds(0.25f);
             ranEW = false;
-            return;
+            yield return 0;
         }
 
         if (ranEN)
@@ -708,8 +732,10 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Down";
             }
 
+            yield return new WaitForSeconds(0.25f);
+
             ranEN = false;
-            return;
+            yield return 0;
         }
 
         if (ranES)
@@ -724,8 +750,9 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Right";
             }
 
+            yield return new WaitForSeconds(0.25f);
             ranES = false;
-            return;
+            yield return 0;
         }
 
         if (ranS)
@@ -745,7 +772,9 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Right";
             }
 
-            return;
+            yield return new WaitForSeconds(0.25f);
+            ranS = false;
+            yield return 0;
         }
 
         if (ranW)
@@ -765,8 +794,9 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Down";
             }
 
-            ranS = false;
-            return;
+            yield return new WaitForSeconds(0.25f);
+            ranW = false;
+            yield return 0;
         }
 
         if (ranN)
@@ -786,8 +816,10 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Down";
             }
 
+            yield return new WaitForSeconds(0.25f);
+
             ranN = false;
-            return;
+            yield return 0;
         }
 
         if (ranE)
@@ -807,8 +839,9 @@ public class Gamemode : MonoBehaviour
                 mainText.text = "Go Down";
             }
 
+            yield return new WaitForSeconds(0.25f);
             ranE = false;
-            return;
+            yield return 0;
         }
     }
 
@@ -852,6 +885,9 @@ public class Gamemode : MonoBehaviour
             turnCountEast = 0;
             blockEastCount = 0;
 
+            //Call function to reset East Path blockades
+            ResetEastPath();
+
             if (northBlockade.activeSelf)
             {
                 northBlockade.SetActive(false);
@@ -883,6 +919,9 @@ public class Gamemode : MonoBehaviour
             turnCountNorth = 0;
             blockNorthCount = 0;
 
+            //Call function to reset North Path blockades
+            ResetNorthPath();
+
             if (eastBlockade.activeSelf)
             {
                 eastBlockade.SetActive(false);
@@ -913,6 +952,10 @@ public class Gamemode : MonoBehaviour
             westBlockade.SetActive(false);
             turnCountWest = 0;
             blockWestCount = 0;
+
+            //Call function to reset West Path blockades
+            ResetWestPath();
+
             if (northBlockade.activeSelf)
             {
                 northBlockade.SetActive(false);
@@ -943,6 +986,10 @@ public class Gamemode : MonoBehaviour
             southBlockade.SetActive(false);
             turnCountSouth = 0;
             blockSouthCount = 0;
+
+            //Call function to reset South Path blockades
+            ResetSouthPath();
+
             if (northBlockade.activeSelf)
             {
                 northBlockade.SetActive(false);
@@ -964,6 +1011,50 @@ public class Gamemode : MonoBehaviour
                 }
             }
         }
+    }
+
+    //Reset east path's blockades
+    void ResetEastPath()
+    {
+        //Set east path's blocks to invisible
+        eastBlock1.SetActive(false);
+        eastBlock2.SetActive(false);
+        eastBlock3.SetActive(false);
+
+        eastTimer.SetActive(false);
+
+
+
+    }
+    //Reset North path's blockades
+    void ResetNorthPath()
+    {
+        //Set north path's blocks to invisible
+        northBlock1.SetActive(false);
+        northBlock2.SetActive(false);
+        northBlock3.SetActive(false);
+
+        northTimer.SetActive(false);
+    }
+    //Reset West path's blockades
+    void ResetWestPath()
+    {
+        //Set west path's blocks to invisible
+        westBlock1.SetActive(false);
+        westBlock2.SetActive(false);
+        westBlock3.SetActive(false);
+
+        westTimer.SetActive(false);
+    }
+    //Reset South path's blockades
+    void ResetSouthPath()
+    {
+        //Set south path's blocks to invisible
+        southBlock1.SetActive(false);
+        southBlock2.SetActive(false);
+        southBlock3.SetActive(false);
+
+        southTimer.SetActive(false);
     }
 
     void GameOver()
@@ -994,6 +1085,12 @@ public class Gamemode : MonoBehaviour
 
         //Reset difficulty
         difficulty = 1;
+
+        //Reset all paths to default state
+        ResetEastPath();
+        ResetNorthPath();
+        ResetWestPath();
+        ResetSouthPath();
     }
 
     //Checks to see if a path has hit max entries
@@ -1002,8 +1099,9 @@ public class Gamemode : MonoBehaviour
         //Increase Block East count
         blockEastCount++;
 
-        //Call function
-        IncreaseTurnCount();
+        //Call function, the time is so the blockade can potentially spawn first
+        //Then it would add 1 to it after
+        Invoke("IncreaseTurnCount", 0.05f);
 
         if (blockEastCount >= individualBlockMax) //If East is less then max)
         {
@@ -1026,8 +1124,9 @@ public class Gamemode : MonoBehaviour
         //Increase Block north count
         blockNorthCount++;
 
-        //Call function
-        IncreaseTurnCount();
+        //Call function, the time is so the blockade can potentially spawn first
+        //Then it would add 1 to it after
+        Invoke("IncreaseTurnCount", 0.05f);
 
         if (blockNorthCount >= individualBlockMax) //If East is less then max)
         {
@@ -1050,8 +1149,9 @@ public class Gamemode : MonoBehaviour
         //Increase Block west count
         blockWestCount++;
 
-        //Call function
-        IncreaseTurnCount();
+        //Call function, the time is so the blockade can potentially spawn first
+        //Then it would add 1 to it after
+        Invoke("IncreaseTurnCount", 0.05f);
 
         if (blockWestCount >= individualBlockMax) //If East is less then max)
         {
@@ -1074,8 +1174,9 @@ public class Gamemode : MonoBehaviour
         //Increase Block south count
         blockSouthCount++;
 
-        //Call function
-        IncreaseTurnCount();
+        //Call function, the time is so the blockade can potentially spawn first
+        //Then it would add 1 to it after
+        Invoke("IncreaseTurnCount", 0.05f);
 
         if (blockSouthCount >= individualBlockMax) //If East is less then max)
         {
@@ -1099,24 +1200,36 @@ public class Gamemode : MonoBehaviour
         if (eastBlockade.activeSelf)
         {
             turnCountEast++;
+
+            //Call function to start blockade timer 
+            BlockadeTimer();
         }
 
         //If north blockade is active, increase turncounteast count by 1
         if (northBlockade.activeSelf)
         {
             turnCountNorth++;
+
+            //Call function to start blockade timer 
+            BlockadeTimer();
         }
 
         //If west blockade is active, increase turncounteast count by 1
         if (westBlockade.activeSelf)
         {
             turnCountWest++;
+
+            //Call function to start blockade timer 
+            BlockadeTimer();
         }
 
         //If south blockade is active, increase turncounteast count by 1
         if (southBlockade.activeSelf)
         {
             turnCountSouth++;
+
+            //Call function to start blockade timer 
+            BlockadeTimer();
         }
 
         //Disable the images for turns left for East path
@@ -1209,6 +1322,97 @@ public class Gamemode : MonoBehaviour
 
         //Call function
         //ResetTurnCount();
+    }
+
+    void BlockadeTimer()
+    {
+        //Trigger timer image and text according to the count
+        if (turnCountEast == 1)
+        {
+            eastTimer.SetActive(true);
+            eastTimerText.text = "3".ToString();
+        }
+
+        if (turnCountEast == 2)
+        {
+            eastTimerText.text = "2".ToString();
+        }
+
+        if (turnCountEast == 3)
+        {
+            eastTimerText.text = "1".ToString();
+        }
+
+        if (turnCountEast == 0)
+        {
+            eastTimer.SetActive(false);
+        }
+
+        //Trigger timer image and text according to the count
+        if (turnCountNorth == 1)
+        {
+            northTimer.SetActive(true);
+            northTimerText.text = "3".ToString();
+        }
+
+        if (turnCountNorth == 2)
+        {
+            northTimerText.text = "2".ToString();
+        }
+
+        if (turnCountNorth == 3)
+        {
+            northTimerText.text = "1".ToString();
+        }
+
+        if (turnCountNorth == 0)
+        {
+            northTimer.SetActive(false);
+        }
+
+        //Trigger timer image and text according to the count
+        if (turnCountWest == 1)
+        {
+            westTimer.SetActive(true);
+            westTimerText.text = "3".ToString();
+        }
+
+        if (turnCountWest == 2)
+        {
+            westTimerText.text = "2".ToString();
+        }
+
+        if (turnCountWest == 3)
+        {
+            westTimerText.text = "1".ToString();
+        }
+
+        if (turnCountWest == 0)
+        {
+            westTimer.SetActive(false);
+        }
+
+        //Trigger timer image and text according to the count
+        if (turnCountSouth == 1)
+        {
+            southTimer.SetActive(true);
+            southTimerText.text = "3".ToString();
+        }
+
+        if (turnCountSouth == 2)
+        {
+            southTimerText.text = "2".ToString();
+        }
+
+        if (turnCountSouth == 3)
+        {
+            southTimerText.text = "1".ToString();
+        }
+
+        if (turnCountSouth == 0)
+        {
+            southTimer.SetActive(false);
+        }
     }
 
     //If the turn count for a side is 0, turn all their images off

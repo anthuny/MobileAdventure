@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.name == "Collider East" && gamemodeScript.wrongAns != 1)
         {
             //Reset player's powision to middle of area
-            transform.position = new Vector2(0, 5);
+            transform.position = new Vector2(-0.5f, 6f);
 
             //calling coroutine / functions
             StartCoroutine("SetWin");
@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.name == "Collider North" && gamemodeScript.wrongAns != 2)
         {
             //Reset player's powision to middle of area
-            transform.position = new Vector2(0, 5);
+            transform.position = new Vector2(-0.5f, 6f);
 
             //calling coroutine / functions
             StartCoroutine("SetWin");
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.name == "Collider West" && gamemodeScript.wrongAns != 3)
         {
             //Reset player's powision to middle of area
-            transform.position = new Vector2(0, 5);
+            transform.position = new Vector2(-0.5f, 6f);
 
             //calling coroutine / functions
             StartCoroutine("SetWin");
@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.name == "Collider South" && gamemodeScript.wrongAns != 4)
         {
             //Reset player's powision to middle of area
-            transform.position = new Vector2(0, 5);
+            transform.position = new Vector2(-0.5f, 6f);
 
             //calling coroutine / functions
             StartCoroutine("SetWin");
@@ -153,7 +153,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.name == "Collider East" && gamemodeScript.wrongAns == 1)
         {
             //Reset player's powision to middle of area
-            transform.position = new Vector2(0, 5);
+            transform.position = new Vector2(-0.5f, 6f);
 
             //calling coroutine
             SetLose();
@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.name == "Collider North" && gamemodeScript.wrongAns == 2)
         {
             //Reset player's powision to middle of area
-            transform.position = new Vector2(0, 5);
+            transform.position = new Vector2(-0.5f, 6f);
 
             //calling coroutine
             SetLose();
@@ -176,7 +176,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.name == "Collider West" && gamemodeScript.wrongAns == 3)
         {
             //Reset player's powision to middle of area
-            transform.position = new Vector2(0, 5);
+            transform.position = new Vector2(-0.5f, 6f);
 
             //calling coroutine
             SetLose();
@@ -187,7 +187,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.name == "Collider South" && gamemodeScript.wrongAns == 4)
         {
             //Reset player's powision to middle of area
-            transform.position = new Vector2(0, 5);
+            transform.position = new Vector2(-0.5f, 6f);
 
             //calling coroutine
             SetLose();
@@ -205,7 +205,7 @@ public class Player : MonoBehaviour
         gamemodeScript.winCondition = true;
         gamemodeScript.SetRoundEnd();
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
 
         //Enemy thinks of new wrong answer
         gamemodeScript.Think();
