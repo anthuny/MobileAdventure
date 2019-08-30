@@ -30,6 +30,11 @@ public class Gamemode : MonoBehaviour
     public int turnCountSouth;
     public int turnCountMax;
 
+    public bool playedOnceN;
+    public bool playedOnceW;
+    public bool playedOnceS;
+    public bool playedOnceE;
+
     public bool allFour;
     public bool ranEN;
     public bool ranEW;
@@ -51,6 +56,7 @@ public class Gamemode : MonoBehaviour
     public Image timeBar;
     public Text scoreText;
     public Text mainText;
+    public Text textOffCam;
     public Text deathText;
 
     public Text highScoreText;
@@ -94,6 +100,8 @@ public class Gamemode : MonoBehaviour
     public GameObject southBlock2;
     public GameObject southBlock3;
 
+    private GameObject player;
+
     void Start()
     {
         //Find gamemode script
@@ -108,9 +116,6 @@ public class Gamemode : MonoBehaviour
         ResetWestPath();
         ResetSouthPath();
 
-        //Set speech bubble to invisible
-        speechBubble.SetActive(false);
-
         //Set score to 0
         score = 0;
 
@@ -122,9 +127,18 @@ public class Gamemode : MonoBehaviour
 
     private void Update()
     {
+        //If player presses escape, quit the game
+        if (Input.GetKeyDown("escape"))
+        {
+            Application.Quit();
+        }
+
         //If the player presses space 
         if (Input.GetKeyDown("space") && playerLost)
         {
+            player = GameObject.Find("Player");
+            player.transform.position = new Vector2(-0.5f, 6f);
+
             //Find Audio script
             GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
             AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
@@ -142,8 +156,9 @@ public class Gamemode : MonoBehaviour
             PlayerPrefs.DeleteKey("HighScore");
             highScoreText.text = "Highscore 0";
         }
-            
+
         //If the time is above 0, decrease it continuesly
+
         if (timeRemaining >= 0 && !playerLost)
         {
             //time remaining decreases over time
@@ -152,8 +167,11 @@ public class Gamemode : MonoBehaviour
             timeBar.fillAmount = timeRemaining / 10;
         }
 
+        //If timer gets to 0, play death SFX 
+        // & trigger gameover function
         if (timeRemaining <= 0)
         {
+            //call function
             GameOver();
         }
 
@@ -165,6 +183,10 @@ public class Gamemode : MonoBehaviour
 
     private void StartGame()
     {
+        //Reset score
+        score = 0;
+        scoreText.text = score.ToString();
+
         //Find gamemode script
         GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
         AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
@@ -207,13 +229,8 @@ public class Gamemode : MonoBehaviour
 
     void GameOver()
     {
-        //Reference audio script
-        //GameObject audioController = GameObject.Find("AudioController");
-        //AudioController audioControllerScript = audioController.GetComponent<AudioController>();
-
-        //Find gamemode script
-        //GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
-        //AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+        //Turn speech bubble off
+        speechBubble.SetActive(false);
 
         //Set Highscore
         if (score > PlayerPrefs.GetInt("HighScore", 0))
@@ -223,10 +240,6 @@ public class Gamemode : MonoBehaviour
         }
 
         highScoreText.text = "Highscore " + PlayerPrefs.GetInt("HighScore", 0).ToString();
-
-        //Reset Score
-        score = 0;
-        scoreText.text = score.ToString();
 
         playerLost = true;
         deathText.text = "Press space to restart";
@@ -247,6 +260,14 @@ public class Gamemode : MonoBehaviour
         ResetNorthPath();
         ResetWestPath();
         ResetSouthPath();
+
+        //On death, make sure the player isnt performing any animations
+        Animator playerAnimator = player.GetComponent<Animator>();
+        playerAnimator.SetBool("GoingLeft", false);
+        playerAnimator.SetBool("GoingUp", false);
+        playerAnimator.SetBool("GoingDown", false);
+        playerAnimator.SetBool("GoingRight", false);
+        playerAnimator.SetBool("Walking", false);
     }
 
     public void Think()
@@ -692,21 +713,25 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 1)
             {
                 mainText.text = "Go Left";
+                textOffCam.text = "Go Left";
             }
 
             if (wrongAns == 2)
             {
                 mainText.text = "Go Up";
+                textOffCam.text = "Go Up";
             }
 
             if (wrongAns == 3)
             {
                 mainText.text = "Go Right";
+                textOffCam.text = "Go Right";
             }
 
             if (wrongAns == 4)
             {
                 mainText.text = "Go Down";
+                textOffCam.text = "Go Down";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -719,11 +744,13 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 1)
             {
                 mainText.text = "Go Left";
+                textOffCam.text = "Go Left";
             }
 
             if (wrongAns == 2)
             {
                 mainText.text = "Go Up";
+                textOffCam.text = "Go Up";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -736,11 +763,13 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 1)
             {
                 mainText.text = "Go Left";
+                textOffCam.text = "Go Left";
             }
 
             if (wrongAns == 3)
             {
                 mainText.text = "Go Right";
+                textOffCam.text = "Go Right";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -753,11 +782,13 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 1)
             {
                 mainText.text = "Go Left";
+                textOffCam.text = "Go Left";
             }
 
             if (wrongAns == 4)
             {
                 mainText.text = "Go Down";
+                textOffCam.text = "Go Down";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -771,11 +802,13 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 2)
             {
                 mainText.text = "Go Up";
+                textOffCam.text = "Go Up";
             }
 
             if (wrongAns == 4)
             {
                 mainText.text = "Go Down";
+                textOffCam.text = "Go Down";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -788,11 +821,13 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 3)
             {
                 mainText.text = "Go Right";
+                textOffCam.text = "Go Right";
             }
 
             if (wrongAns == 4)
             {
                 mainText.text = "Go Down";
+                textOffCam.text = "Go Down";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -806,11 +841,13 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 2)
             {
                 mainText.text = "Go Up";
+                textOffCam.text = "Go Up";
             }
 
             if (wrongAns == 3)
             {
                 mainText.text = "Go Right";
+                textOffCam.text = "Go Right";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -823,16 +860,19 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 1)
             {
                 mainText.text = "Go Left";
+                textOffCam.text = "Go Left";
             }
 
             if (wrongAns == 2)
             {
                 mainText.text = "Go Up";
+                textOffCam.text = "Go Up";
             }
 
             if (wrongAns == 3)
             {
                 mainText.text = "Go Right";
+                textOffCam.text = "Go Right";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -845,16 +885,19 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 1)
             {
                 mainText.text = "Go Left";
+                textOffCam.text = "Go Left";
             }
 
             if (wrongAns == 2)
             {
                 mainText.text = "Go Up";
+                textOffCam.text = "Go Up";
             }
 
             if (wrongAns == 4)
             {
                 mainText.text = "Go Down";
+                textOffCam.text = "Go Down";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -867,16 +910,19 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 1)
             {
                 mainText.text = "Go Left";
+                textOffCam.text = "Go Left";
             }
 
             if (wrongAns == 3)
             {
                 mainText.text = "Go Right";
+                textOffCam.text = "Go Right";
             }
 
             if (wrongAns == 4)
             {
                 mainText.text = "Go Down";
+                textOffCam.text = "Go Down";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -890,16 +936,19 @@ public class Gamemode : MonoBehaviour
             if (wrongAns == 2)
             {
                 mainText.text = "Go Up";
+                textOffCam.text = "Go Up";
             }
 
             if (wrongAns == 3)
             {
                 mainText.text = "Go Right";
+                textOffCam.text = "Go Right";
             }
 
             if (wrongAns == 4)
             {
                 mainText.text = "Go Down";
+                textOffCam.text = "Go Down";
             }
 
             yield return new WaitForSeconds(0.25f);
@@ -948,6 +997,9 @@ public class Gamemode : MonoBehaviour
             turnCountEast = 0;
             blockEastCount = 0;
 
+            //Reset variable
+            playedOnceE = false;
+
             //Find gamemode script
             GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
             AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
@@ -988,6 +1040,9 @@ public class Gamemode : MonoBehaviour
             northBlockade.SetActive(false);
             turnCountNorth = 0;
             blockNorthCount = 0;
+
+            //Reset variable
+            playedOnceN = false;
 
             //Find gamemode script
             GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
@@ -1030,6 +1085,9 @@ public class Gamemode : MonoBehaviour
             turnCountWest = 0;
             blockWestCount = 0;
 
+            //Reset variable
+            playedOnceW = false;
+
             //Find gamemode script
             GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
             AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
@@ -1070,6 +1128,9 @@ public class Gamemode : MonoBehaviour
             southBlockade.SetActive(false);
             turnCountSouth = 0;
             blockSouthCount = 0;
+
+            //Reset variable
+            playedOnceS = false;
 
             //Find gamemode script
             GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
@@ -1304,12 +1365,17 @@ public class Gamemode : MonoBehaviour
 
         if (blockEastCount == 3)
         {
-            //Find gamemode script
-            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
-            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+            if (playedOnceE == false)
+            {
+                playedOnceE = true;
 
-            //Play audio for block up
-            audioControllerMainScript.blockSpawn.Play();
+                //Find gamemode script
+                GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+                AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+                //Play audio for block up
+                audioControllerMainScript.blockSpawn.Play();
+            }
 
             eastBlock3.SetActive(true);
             eastBlock1.SetActive(false);
@@ -1333,12 +1399,17 @@ public class Gamemode : MonoBehaviour
 
         if (blockNorthCount == 3)
         {
-            //Find gamemode script
-            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
-            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+            if (playedOnceN == false)
+            {
+                playedOnceN = true;
 
-            //Play audio for block up
-            audioControllerMainScript.blockSpawn.Play();
+                //Find gamemode script
+                GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+                AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+                //Play audio for block up
+                audioControllerMainScript.blockSpawn.Play();
+            }
 
             northBlock3.SetActive(true);
             northBlock1.SetActive(false);
@@ -1362,12 +1433,17 @@ public class Gamemode : MonoBehaviour
 
         if (blockWestCount == 3)
         {
-            //Find gamemode script
-            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
-            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+            if (playedOnceW == false)
+            {
+                playedOnceW = true;
 
-            //Play audio for block up
-            audioControllerMainScript.blockSpawn.Play();
+                //Find gamemode script
+                GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+                AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+                //Play audio for block up
+                audioControllerMainScript.blockSpawn.Play();
+            }
 
             westBlock3.SetActive(true);
             westBlock1.SetActive(false);
@@ -1391,12 +1467,17 @@ public class Gamemode : MonoBehaviour
 
         if (blockSouthCount == 3)
         {
-            //Find gamemode script
-            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
-            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+            if (playedOnceS == false)
+            {
+                playedOnceS = true;
 
-            //Play audio for block up
-            audioControllerMainScript.blockSpawn.Play();
+                //Find gamemode script
+                GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+                AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+                //Play audio for block up
+                audioControllerMainScript.blockSpawn.Play();
+            }
 
             southBlock3.SetActive(true);
             southBlock1.SetActive(false);
