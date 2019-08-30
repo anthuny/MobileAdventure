@@ -5,6 +5,12 @@ using UnityEngine;
 public class AudioControllerMain : MonoBehaviour
 {
     public AudioSource mainMusicLoop;
+    public AudioSource pathCorrect;
+    public AudioSource pathWrong;
+    public AudioSource startGame;
+    public AudioSource blockOver;
+    public AudioSource blockSpawn;
+
     public bool playingMML = false;
 
     // Update is called once per frame

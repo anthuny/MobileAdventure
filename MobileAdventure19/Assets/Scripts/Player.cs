@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
         //Find components
         rb = GetComponent<Rigidbody2D>();
     }
+
     void FixedUpdate()
     {
         //Find gamemode script
@@ -203,6 +204,14 @@ public class Player : MonoBehaviour
         gamemodeScript.winCondition = true;
         gamemodeScript.SetRoundEnd();
 
+        //Find Audio script
+        GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+        AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+        //Play correct path Audio
+        audioControllerMainScript.pathCorrect.pitch = Random.Range(.9f,1.1f);
+        audioControllerMainScript.pathCorrect.Play();
+
         yield return new WaitForSeconds(0.1f);
 
         //Enemy thinks of new wrong answer
@@ -218,5 +227,13 @@ public class Player : MonoBehaviour
         //Sets screen text
         gamemodeScript.winCondition = false;
         gamemodeScript.SetRoundEnd();
+
+        //Find Audio script
+        GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+        AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+        //Play correct path Audio
+        audioControllerMainScript.pathWrong.pitch = Random.Range(.9f, 1.1f);
+        audioControllerMainScript.pathWrong.Play();
     }
 }

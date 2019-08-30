@@ -125,6 +125,13 @@ public class Gamemode : MonoBehaviour
         //If the player presses space 
         if (Input.GetKeyDown("space") && playerLost)
         {
+            //Find Audio script
+            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+            //Play correct path Audio
+            audioControllerMainScript.startGame.Play();
+
             //Call function
             StartGame();
         }
@@ -941,6 +948,13 @@ public class Gamemode : MonoBehaviour
             turnCountEast = 0;
             blockEastCount = 0;
 
+            //Find gamemode script
+            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+            //Play block over audio
+            audioControllerMainScript.blockOver.Play();
+
             //Call function to reset East Path blockades
             ResetEastPath();
 
@@ -975,6 +989,13 @@ public class Gamemode : MonoBehaviour
             turnCountNorth = 0;
             blockNorthCount = 0;
 
+            //Find gamemode script
+            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+            //Play block over audio
+
+            audioControllerMainScript.blockOver.Play();
             //Call function to reset North Path blockades
             ResetNorthPath();
 
@@ -1009,6 +1030,13 @@ public class Gamemode : MonoBehaviour
             turnCountWest = 0;
             blockWestCount = 0;
 
+            //Find gamemode script
+            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+            //Play block over audio
+
+            audioControllerMainScript.blockOver.Play();
             //Call function to reset West Path blockades
             ResetWestPath();
 
@@ -1042,6 +1070,13 @@ public class Gamemode : MonoBehaviour
             southBlockade.SetActive(false);
             turnCountSouth = 0;
             blockSouthCount = 0;
+
+            //Find gamemode script
+            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+            //Play block over audio
+            audioControllerMainScript.blockOver.Play();
 
             //Call function to reset South Path blockades
             ResetSouthPath();
@@ -1269,6 +1304,13 @@ public class Gamemode : MonoBehaviour
 
         if (blockEastCount == 3)
         {
+            //Find gamemode script
+            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+            //Play audio for block up
+            audioControllerMainScript.blockSpawn.Play();
+
             eastBlock3.SetActive(true);
             eastBlock1.SetActive(false);
             eastBlock2.SetActive(false);
@@ -1291,6 +1333,13 @@ public class Gamemode : MonoBehaviour
 
         if (blockNorthCount == 3)
         {
+            //Find gamemode script
+            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+            //Play audio for block up
+            audioControllerMainScript.blockSpawn.Play();
+
             northBlock3.SetActive(true);
             northBlock1.SetActive(false);
             northBlock2.SetActive(false);
@@ -1313,6 +1362,13 @@ public class Gamemode : MonoBehaviour
 
         if (blockWestCount == 3)
         {
+            //Find gamemode script
+            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+            //Play audio for block up
+            audioControllerMainScript.blockSpawn.Play();
+
             westBlock3.SetActive(true);
             westBlock1.SetActive(false);
             westBlock2.SetActive(false);
@@ -1335,6 +1391,13 @@ public class Gamemode : MonoBehaviour
 
         if (blockSouthCount == 3)
         {
+            //Find gamemode script
+            GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+            AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+            //Play audio for block up
+            audioControllerMainScript.blockSpawn.Play();
+
             southBlock3.SetActive(true);
             southBlock1.SetActive(false);
             southBlock2.SetActive(false);
