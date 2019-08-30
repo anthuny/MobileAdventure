@@ -96,6 +96,12 @@ public class Gamemode : MonoBehaviour
 
     void Start()
     {
+        //Find gamemode script
+        GameObject audioController = GameObject.Find("AudioControllerStart");
+        AudioController audioControllerScript = audioController.GetComponent<AudioController>();
+
+        audioControllerScript.playingMM = true;
+
         //Call functions to set all path blockades to off
         ResetEastPath();
         ResetNorthPath();
@@ -116,7 +122,6 @@ public class Gamemode : MonoBehaviour
 
     private void Update()
     {
-
         //If the player presses space 
         if (Input.GetKeyDown("space") && playerLost)
         {
@@ -153,6 +158,13 @@ public class Gamemode : MonoBehaviour
 
     private void StartGame()
     {
+        //Find gamemode script
+        GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+        AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+        //Play starting music
+        audioControllerMainScript.playingMML = true;
+
         //Set death to false
         playerLost = false;
 
@@ -184,6 +196,50 @@ public class Gamemode : MonoBehaviour
         northBlockade.SetActive(false);
         westBlockade.SetActive(false);
         southBlockade.SetActive(false);
+    }
+
+    void GameOver()
+    {
+        //Reference audio script
+        //GameObject audioController = GameObject.Find("AudioController");
+        //AudioController audioControllerScript = audioController.GetComponent<AudioController>();
+
+        //Find gamemode script
+        //GameObject audioControllerMain = GameObject.Find("AudioControllerMain");
+        //AudioControllerMain audioControllerMainScript = audioControllerMain.GetComponent<AudioControllerMain>();
+
+        //Set Highscore
+        if (score > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            highScoreText.text = highScore.ToString();
+        }
+
+        highScoreText.text = "Highscore " + PlayerPrefs.GetInt("HighScore", 0).ToString();
+
+        //Reset Score
+        score = 0;
+        scoreText.text = score.ToString();
+
+        playerLost = true;
+        deathText.text = "Press space to restart";
+
+        //Set values of blockades to 0
+        blockEastCount = 0;
+        blockNorthCount = 0;
+        blockWestCount = 0;
+        blockSouthCount = 0;
+
+        blockCount = 0;
+
+        //Reset difficulty
+        difficulty = 1;
+
+        //Reset all paths to default state
+        ResetEastPath();
+        ResetNorthPath();
+        ResetWestPath();
+        ResetSouthPath();
     }
 
     public void Think()
@@ -1055,42 +1111,6 @@ public class Gamemode : MonoBehaviour
         southBlock3.SetActive(false);
 
         southTimer.SetActive(false);
-    }
-
-    void GameOver()
-    {
-        //Set Highscore
-        if (score > PlayerPrefs.GetInt("HighScore", 0))
-        {
-            PlayerPrefs.SetInt("HighScore", score);
-            highScoreText.text = highScore.ToString();
-        }
-
-        highScoreText.text = "Highscore " + PlayerPrefs.GetInt("HighScore", 0).ToString();
-
-        //Reset Score
-        score = 0;
-        scoreText.text = score.ToString();
-
-        playerLost = true;
-        deathText.text = "Press space to restart";
-
-        //Set values of blockades to 0
-        blockEastCount = 0;
-        blockNorthCount = 0;
-        blockWestCount = 0;
-        blockSouthCount = 0;
-
-        blockCount = 0;
-
-        //Reset difficulty
-        difficulty = 1;
-
-        //Reset all paths to default state
-        ResetEastPath();
-        ResetNorthPath();
-        ResetWestPath();
-        ResetSouthPath();
     }
 
     //Checks to see if a path has hit max entries

@@ -68,8 +68,6 @@ public class Player : MonoBehaviour
                 animator.SetBool("GoingDown", false);
             }
 
-
-
             //Player Movement
             playerPos = Vector3.zero;
             playerPos.x = Input.GetAxisRaw("Horizontal");
