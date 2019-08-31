@@ -1043,7 +1043,7 @@ public class Gamemode : MonoBehaviour
             //Call function to reset East Path blockades
             ResetEastPath();
 
-            if (northBlockade.activeSelf)
+            /*if (northBlockade.activeSelf)
             {
                 northBlockade.SetActive(false);
                 turnCountNorth = 0;
@@ -1062,7 +1062,7 @@ public class Gamemode : MonoBehaviour
                         blockSouthCount = 0;
                     }
                 }
-            }
+            } */
         }
 
         if (turnCountNorth == turnCountMax && northBlockade.activeSelf)
@@ -1087,7 +1087,7 @@ public class Gamemode : MonoBehaviour
             //Call function to reset North Path blockades
             ResetNorthPath();
 
-            if (eastBlockade.activeSelf)
+            /* if (eastBlockade.activeSelf)
             {
                 eastBlockade.SetActive(false);
                 turnCountEast = 0;
@@ -1106,7 +1106,7 @@ public class Gamemode : MonoBehaviour
                         blockSouthCount = 0;
                     }
                 }
-            }
+            } */
         }
 
         if (turnCountWest == turnCountMax && westBlockade.activeSelf)
@@ -1131,7 +1131,7 @@ public class Gamemode : MonoBehaviour
             //Call function to reset West Path blockades
             ResetWestPath();
 
-            if (northBlockade.activeSelf)
+            /* if (northBlockade.activeSelf)
             {
                 northBlockade.SetActive(false);
                 turnCountNorth = 0;
@@ -1150,7 +1150,7 @@ public class Gamemode : MonoBehaviour
                         blockSouthCount = 0;
                     }
                 }
-            }
+            } */
         }
 
         if (turnCountSouth == turnCountMax && southBlockade.activeSelf)
@@ -1175,7 +1175,7 @@ public class Gamemode : MonoBehaviour
             //Call function to reset South Path blockades
             ResetSouthPath();
 
-            if (northBlockade.activeSelf)
+             /* if (northBlockade.activeSelf)
             {
                 northBlockade.SetActive(false);
                 turnCountNorth = 0;
@@ -1194,7 +1194,7 @@ public class Gamemode : MonoBehaviour
                         blockEastCount = 0;
                     }
                 }
-            }
+            } */
         }
     }
 
@@ -1207,9 +1207,6 @@ public class Gamemode : MonoBehaviour
         eastBlock3.SetActive(false);
 
         eastTimer.SetActive(false);
-
-
-
     }
     //Reset North path's blockades
     void ResetNorthPath()
