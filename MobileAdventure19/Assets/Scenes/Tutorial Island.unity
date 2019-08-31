@@ -31904,7 +31904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 7.5
   playerSpeed: 0
-  sprintSpeed: 10
+  sprintSpeed: 12.5
   animator: {fileID: 671516685}
 --- !u!1 &689409622
 GameObject:
@@ -33218,7 +33218,8 @@ MonoBehaviour:
   timeBar: {fileID: 666662338}
   sprintBar: {fileID: 1701263366}
   sprintTime: 1
-  sprintHoldBack: 0.01
+  sprintMaxTime: 1
+  sprintHoldBack: 0.03
   scoreText: {fileID: 946708469}
   mainText: {fileID: 484183788}
   textOffCam: {fileID: 1798911113}
@@ -35152,7 +35153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1387318567
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35167,10 +35168,10 @@ RectTransform:
   m_Father: {fileID: 737047379}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 159, y: -260.9}
-  m_SizeDelta: {x: 158, y: 7.7}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 159, y: 49.100006}
+  m_SizeDelta: {x: 158, y: 7.700012}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1387318568
 MonoBehaviour:
@@ -36428,7 +36429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1701263365
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36443,10 +36444,10 @@ RectTransform:
   m_Father: {fileID: 737047379}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 159, y: -260.9}
-  m_SizeDelta: {x: 158, y: 7.7}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 159, y: 49.100006}
+  m_SizeDelta: {x: 158, y: 7.700012}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1701263366
 MonoBehaviour:

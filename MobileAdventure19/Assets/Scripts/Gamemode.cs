@@ -57,8 +57,9 @@ public class Gamemode : MonoBehaviour
 
 
     public Image sprintBar;
-    
-    public float sprintTime = 1;
+
+    public float sprintTime;
+    public float sprintMaxTime = 1;
     public float sprintHoldBack = 1;
 
 
@@ -164,6 +165,12 @@ public class Gamemode : MonoBehaviour
             playerScript.playerSpeed = playerScript.sprintSpeed;
         }
 
+        if (!playerLost && sprintTime <= 0)
+        {
+            Player playerScript = player.GetComponent<Player>();
+            playerScript.playerSpeed = playerScript.walkSpeed;
+        }
+
         //If player presses escape, quit the game
         if (Input.GetKeyDown("escape"))
         {
@@ -223,6 +230,8 @@ public class Gamemode : MonoBehaviour
         //Setting values to default starting value
         timeRemaining = maxTime;
         timeBar.fillAmount = 1;
+
+        sprintTime = sprintMaxTime;
 
         //Set start text to nothing
         deathText.text = "";
@@ -999,6 +1008,10 @@ public class Gamemode : MonoBehaviour
     //When the player chooses successfully
     IEnumerator ScoreUp()
     {
+        //Set sprintbar to full
+        sprintTime = sprintMaxTime;
+        sprintBar.fillAmount = 1f;
+
         //Set timebar to full
         timeRemaining = maxTime;
 
