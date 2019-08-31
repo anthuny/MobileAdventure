@@ -54,6 +54,14 @@ public class Gamemode : MonoBehaviour
     public int playerSouthCount;
 
     public Image timeBar;
+
+
+    public Image sprintBar;
+    
+    public float sprintTime = 1;
+    public float sprintHoldBack = 1;
+
+
     public Text scoreText;
     public Text mainText;
     public Text textOffCam;
@@ -127,12 +135,6 @@ public class Gamemode : MonoBehaviour
 
     private void Update()
     {
-        //If player presses escape, quit the game
-        if (Input.GetKeyDown("escape"))
-        {
-            Application.Quit();
-        }
-
         //If the player presses space 
         if (Input.GetKeyDown("space") && playerLost)
         {
@@ -148,6 +150,24 @@ public class Gamemode : MonoBehaviour
 
             //Call function
             StartGame();
+        }
+
+        //If player is not lost and still has sprint bar, deplete it
+        if (!playerLost && Input.GetKey(KeyCode.LeftShift) && sprintTime > 0)
+        {
+            //time remaining decreases over time
+            sprintTime -= sprintHoldBack;
+
+            sprintBar.fillAmount = sprintTime;
+
+            Player playerScript = player.GetComponent<Player>();
+            playerScript.playerSpeed = playerScript.sprintSpeed;
+        }
+
+        //If player presses escape, quit the game
+        if (Input.GetKeyDown("escape"))
+        {
+            Application.Quit();
         }
 
         //If the player presses r, reset the highscore

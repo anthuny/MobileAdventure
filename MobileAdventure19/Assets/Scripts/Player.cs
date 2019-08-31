@@ -8,7 +8,9 @@ public class Player : MonoBehaviour
     private Vector3 playerPos;
     private Rigidbody2D rb;
 
-    public float playerSpeed = .2f;
+    public float walkSpeed;
+    public float playerSpeed;
+    public float sprintSpeed;
 
     public Animator animator;
 
@@ -67,6 +69,12 @@ public class Player : MonoBehaviour
             if (!Input.GetKey("s"))
             {
                 animator.SetBool("GoingDown", false);
+            }
+
+            //If player isnt sprinting, set speed to walk speed
+            if (!Input.GetKey(KeyCode.LeftShift))
+            {
+                playerSpeed = walkSpeed;
             }
 
             //Player Movement
